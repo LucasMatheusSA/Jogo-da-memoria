@@ -20,7 +20,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        setup();
+        setup(); //inicio de cadastro no jogo
         bootIMServer();
 
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -31,8 +31,6 @@ public class Main extends Application {
         Singleton.INSTANCE.updatePontosPlayer1();
         Singleton.INSTANCE.updatePontosPlayer2();
         
-        Singleton.INSTANCE.updateVezDoJogador();
-
         primaryStage.setTitle("Jogo da Memoria");
         primaryStage.setScene(Singleton.INSTANCE.scene);
 
@@ -56,7 +54,7 @@ public class Main extends Application {
                 "Qual o seu nome?");
 
         Singleton.INSTANCE.localIPAddress = JOptionPane.showInputDialog(null,
-                "Qual o seu endereço IP??");
+                "Qual o seu endereço IP?");
         Singleton.INSTANCE.localIMServerPort = Singleton.INSTANCE.getPortNumber();
         Singleton.INSTANCE.imagesIds = new ArrayList<String>();
 

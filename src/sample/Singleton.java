@@ -84,9 +84,9 @@ public enum Singleton {
         return columnIndex;
     }
 
-    public void updatePontosPlayer1(){
+    public void updatePontosPlayer1(){// Atualizar os pontos do jogador 1
 
-        Platform.runLater(new Runnable() {
+        Platform.runLater(new Runnable() { // deixa  função rolando para atualizar os pontos do jogador
             @Override
             public void run() {
                 Label pontosPlayer1Label = (Label) Singleton.INSTANCE.scene.lookup("#pontosPlayer1Label");
@@ -115,19 +115,7 @@ public enum Singleton {
     }
 
     
-    public void updateVezDoJogador(){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                Label vezDoJogadorLabel = (Label) Singleton.INSTANCE.scene.lookup("#vezDoJogadorLabel");
-                if (Singleton.INSTANCE.localPlayerName.length() > 10)
-                    vezDoJogadorLabel.setText(String.format("%s...: %03d", Singleton.INSTANCE.opponentName.substring(0, 10), Singleton.INSTANCE.localPlayerName));
-                else
-                    vezDoJogadorLabel.setText(String.format("%s: %03d", Singleton.INSTANCE.opponentName, Singleton.INSTANCE.localPlayerName));
-                
-            }
-        });
-    }
+
     
     public int getPortNumber(){
         boolean isOK = true;
@@ -136,7 +124,7 @@ public enum Singleton {
         do{
             try{
                 portNumber = Integer.parseInt(JOptionPane.showInputDialog(null,
-                        "Qual a porta do servidor de mensagens?"));
+                        "Qual a porta?"));
 
             }catch (NumberFormatException e){
                 isOK = false;
@@ -166,7 +154,7 @@ public enum Singleton {
         Singleton.INSTANCE.startSent = true;
     }
 
-    public void sendFlip(int rowIndex, int columnIndex){
+    public void sendFlip(int rowIndex, int columnIndex){ // para virar a carta 
         String flipMessage;
         SendCommandRunnable flipRunnable;
 
@@ -176,7 +164,7 @@ public enum Singleton {
         t.start();
     }
 
-    public void sendDeck(){
+    public void sendDeck(){ // para enviar informações do deck 
         String message;
         SendCommandRunnable sendCommandRunnable;
         Thread thread;
@@ -191,11 +179,8 @@ public enum Singleton {
         thread.start();
     }
 
-    /*
-     * Shared Game Methods
-     */
 
-    public void checkWinner(){
+    public void checkWinner(){ // checar quem ganhou 
         if(Singleton.INSTANCE.pontosPlayer1 + Singleton.INSTANCE.pontosPlayer2 == 12){
             String message;
 
