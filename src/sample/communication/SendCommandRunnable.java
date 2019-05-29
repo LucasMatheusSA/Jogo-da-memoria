@@ -20,12 +20,12 @@ public class SendCommandRunnable extends Task<Void> {
     @Override
     protected Void call() throws Exception {
         try {
-            this.socketToServer = new Socket(Singleton.INSTANCE.opponentIPAddress, Singleton.INSTANCE.opponentIMServerPort);
-            DataOutputStream dataOutputStream = new DataOutputStream(this.socketToServer.getOutputStream());
-            dataOutputStream.writeUTF(this.messageToSent);
+            this.socketToServer = new Socket(Singleton.INSTANCE.opponentIPAddress, Singleton.INSTANCE.opponentIMServerPort); // cria uma conexao 
+            DataOutputStream dataOutputStream = new DataOutputStream(this.socketToServer.getOutputStream()); // cria um novo objeto para escrita de dados 
+            dataOutputStream.writeUTF(this.messageToSent); //Grava uma string no fluxo de saída subjacente
 
-            dataOutputStream.close();
-            this.socketToServer.close();
+            dataOutputStream.close(); // fecha a mensagens escrita 
+            this.socketToServer.close(); // encerra a conexao 
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -38,15 +38,13 @@ public class SendCommandRunnable extends Task<Void> {
         super.succeeded();
         int messageFirstBlankSpaceIndex;
         String command;
-        messageFirstBlankSpaceIndex = this.messageToSent.indexOf(" ");
-        command = this.messageToSent.substring(0, messageFirstBlankSpaceIndex);
+        messageFirstBlankSpaceIndex = this.messageToSent.indexOf(" "); //Retorna o índice dentro dessa sequência da primeira ocorrência da subseqüência especificada.
+        command = this.messageToSent.substring(0, messageFirstBlankSpaceIndex);//salva a mensagens ate a primeira palavra 
 
-        if(command.equals(GameCommands.MSG.toString()))
-            Singleton.INSTANCE.balloons.add(Utils.makeBalloon(this.messageToSent.substring(messageFirstBlankSpaceIndex + 1), false));
     }
 
     @Override
-    protected void failed(){
+    protected void failed(){ // teste fe falha , joga uma exeção em caso de falha 
         super.failed();
 
         getException().printStackTrace();

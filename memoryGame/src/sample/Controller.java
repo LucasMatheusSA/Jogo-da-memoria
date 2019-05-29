@@ -29,12 +29,6 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable{
-    //@FXML
-    //ListView<HBox> messagesListView;
-    //@FXML
-    //TextField messageInputField;
-    //@FXML
-    //Button enviarButton;
     @FXML
     Button conectarOponente;
     @FXML
@@ -48,11 +42,6 @@ public class Controller implements Initializable{
 
     @FXML
     Label ipAddressLabel;
-
-    //@FXML
-    //public void enviarMensagemOnButtonClick(ActionEvent actionEvent) {
-    //    enviarMensagem();
-    //}
 
 
     @FXML void connectOpponent(ActionEvent actionEvent){
@@ -162,17 +151,6 @@ public class Controller implements Initializable{
         return new Timeline(keyFrame);
     }
 
-    /*private void enviarMensagem(){
-        if (!messageInputField.getText().isEmpty()) {
-            Thread t = new Thread(new SendCommandRunnable(GameCommands.MSG + " " + messageInputField.getText()));
-            t.start();
-            this.messageInputField.clear();
-        }
-        else{
-            JOptionPane.showMessageDialog(null,
-                    "Campo de texto a ser enviado está vazio.");
-        }
-    }*/
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -188,9 +166,6 @@ public class Controller implements Initializable{
         Singleton.INSTANCE.pontosPlayer2 = 0;
 
         this.imagesGridPane.setDisable(true);
-        //this.messagesListView.setDisable(true);
-        //this.messageInputField.setDisable(true);
-        //this.enviarButton.setDisable(true);
 
         for (Node node: this.imagesGridPane.getChildren()){
             node.getStyleClass().addAll("imageview", "imageview:hover");

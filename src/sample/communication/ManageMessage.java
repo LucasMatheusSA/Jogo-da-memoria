@@ -21,7 +21,6 @@ import java.io.DataInputStream;
 import java.net.Socket;
 import java.util.Random;
 
-
 public class ManageMessage extends Task<String> {
     Socket socket;
 
