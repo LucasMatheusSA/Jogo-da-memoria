@@ -28,55 +28,50 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable{
+public class Controller implements Initializable{  
+    // Declaração de funções 
     @FXML
-    Button conectarOponente;
+    Button conectarOponente; //Declarando butão do oponente 
     @FXML
-    GridPane imagesGridPane;
+    GridPane imagesGridPane; // Declarando Grid das cartas
     @FXML
-    Label pontosPlayer1Label;
+    Label pontosPlayer1Label; // Declarando variavel para pontos do player 1
     @FXML
-    Label pontosPlayer2Label;
+    Label pontosPlayer2Label; // Declarando variavel para pontos do player 2
     @FXML
-    Label vezDoJogadorLabel;
+    Label ipAddressLabel; // Declarando variavel de ip
 
-    @FXML
-    Label ipAddressLabel;
-
-
-    @FXML void connectOpponent(ActionEvent actionEvent){
+    @FXML void connectOpponent(ActionEvent actionEvent){ // Função para conectar ocm oponente 
         Singleton.INSTANCE.opponentIPAddress = JOptionPane.showInputDialog(null,
-                "Endereço IP do Oponente");
-        Singleton.INSTANCE.opponentIMServerPort = Singleton.INSTANCE.getPortNumber();
+                "Endereço IP do Oponente"); // Resgata o edereço Ip do oponente e quarda em opponentIPAddress
+        Singleton.INSTANCE.opponentIMServerPort = Singleton.INSTANCE.getPortNumber();// Resgata a porta do oponente em opponentIMServerPort
 
-        Singleton.INSTANCE.sendStart();
+        Singleton.INSTANCE.sendStart(); // Starta a conexão com o oponente
 
-        this.conectarOponente.setDisable(true);
+        this.conectarOponente.setDisable(true); 
         JOptionPane.showMessageDialog(null,
-                "Conectando a oponente, por favor, aguarde!");
+                "Conectando a oponente, por favor, aguarde!"); //mensagem de conexão com o oponente
     }
 
-
-
     @FXML
-    public void clickImagesGridPane(Event event){
-        if(event.getTarget().getClass().equals(ImageView.class)){
+    public void clickImagesGridPane(Event event){ // função com regras do jogo
+        if(event.getTarget().getClass().equals(ImageView.class)){ //Checa se houve evento em alguma das cartas 
 
-            final ImageView targetImageView;
+            final ImageView targetImageView; 
             String currentOpenedImageId;
 
-            targetImageView = (ImageView) event.getTarget();
-            currentOpenedImageId = Singleton.INSTANCE.getCardImagePath(targetImageView);
+            targetImageView = (ImageView) event.getTarget(); //carrega qual imagem teve a interação 
+            currentOpenedImageId = Singleton.INSTANCE.getCardImagePath(targetImageView); // carrega imagem com interação do opoente 
 
-            if(!Singleton.INSTANCE.rightPairs.contains(currentOpenedImageId)) {
+            if(!Singleton.INSTANCE.rightPairs.contains(currentOpenedImageId)) { // 
                 targetImageView.setImage(new Image(currentOpenedImageId));
             }
 
             //Testa se é a primeira carta a ser aberta pelo usuário
             if(Singleton.INSTANCE.lastOpenedCard == null){
-                Singleton.INSTANCE.lastOpenedCard = targetImageView;
+                Singleton.INSTANCE.lastOpenedCard = targetImageView; // se não houve nenhuma carta aberta ele carrega a carta clicada 
 
-                Singleton.INSTANCE.sendFlip(
+                Singleton.INSTANCE.sendFlip( // e vira ela
                         Singleton.INSTANCE.getGridPaneRowIndexForChildNode(targetImageView),
                         Singleton.INSTANCE.getGridPaneColumnIndexForChildNode(targetImageView));
 
@@ -87,11 +82,11 @@ public class Controller implements Initializable{
                     String lastOpenedCardImageId;
                     lastOpenedCardImageId = Singleton.INSTANCE.getCardImagePath(Singleton.INSTANCE.lastOpenedCard);
 
-                    Singleton.INSTANCE.sendFlip(
+                    Singleton.INSTANCE.sendFlip(// e vira ela
                             Singleton.INSTANCE.getGridPaneRowIndexForChildNode(targetImageView),
                             Singleton.INSTANCE.getGridPaneColumnIndexForChildNode(targetImageView));
 
-                    //Checar se as duas cartas tem a mesma f
+                    //Checar se as duas cartas tem a mesma face
                     if (lastOpenedCardImageId.equals(currentOpenedImageId)) {
 
                         if (!Singleton.INSTANCE.rightPairs.contains(currentOpenedImageId)){
@@ -99,7 +94,8 @@ public class Controller implements Initializable{
                             Singleton.INSTANCE.rightPairs.add(currentOpenedImageId);
                             Singleton.INSTANCE.pontosPlayer1++;
                             Singleton.INSTANCE.updatePontosPlayer1();
-
+                            
+                            //Deixa marcadas as cartas acertadas 
                             targetImageView.setImage(new Image("sample/images/cards/blank.png"));
                             targetImageView.getStyleClass().clear();
                             targetImageView.getStyleClass().add("correctcard");
@@ -109,8 +105,8 @@ public class Controller implements Initializable{
                             Singleton.INSTANCE.lastOpenedCard.getStyleClass().add("correctcard");
                         }
 
-                        Singleton.INSTANCE.checkWinner();
-                        Singleton.INSTANCE.lastOpenedCard = null;
+                        Singleton.INSTANCE.checkWinner();// checa se ganhou 
+                        Singleton.INSTANCE.lastOpenedCard = null; // Limpa o campo de lastOponenteCard
 
                     }
                     //Se não possuirem a mesma figura, mostra ambas cartas por 2s e as vira de novo.
@@ -151,7 +147,6 @@ public class Controller implements Initializable{
         return new Timeline(keyFrame);
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Random random = new Random();
@@ -171,7 +166,6 @@ public class Controller implements Initializable{
             node.getStyleClass().addAll("imageview", "imageview:hover");
         }
 
-        //this.messagesListView.setItems(Singleton.INSTANCE.balloons);
         this.ipAddressLabel.setText( String.format("Endereço IP: %s:%d", Singleton.INSTANCE.localIPAddress, Singleton.INSTANCE.localIMServerPort) );
     }
 }

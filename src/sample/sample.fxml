@@ -187,12 +187,12 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="pontosPlayer1Label" text="Pontos Player 01: XXXX">
+            <Label fx:id="pontosPlayer1Label" text="Pontos Player 01: XXXX" textFill="#e80c0c">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="pontosPlayer2Label" text="Pontos Player 02: XXXX" GridPane.columnIndex="1">
+            <Label fx:id="pontosPlayer2Label" text="Pontos Player 02: XXXX" textFill="#380bee" GridPane.columnIndex="1">
                <font>
                   <Font size="20.0" />
                </font>

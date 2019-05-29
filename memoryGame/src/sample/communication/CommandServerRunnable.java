@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-/**
- * Created by Francisco José A. C. Souza on 23/12/2014.
- */
+
 public class CommandServerRunnable extends Task<Void>{
     private ServerSocket serverSocket;
     private Socket socket;
@@ -26,7 +24,7 @@ public class CommandServerRunnable extends Task<Void>{
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
-
+    
     @Override
     protected Void call() throws Exception {
         try {
@@ -38,7 +36,7 @@ public class CommandServerRunnable extends Task<Void>{
             System.out.println(String.format("Endereço IP: %s", Singleton.INSTANCE.localIPAddress));
         }catch (IOException e){
             e.printStackTrace();
-        }
+      }
 
         while(alive){
             try {
@@ -53,5 +51,6 @@ public class CommandServerRunnable extends Task<Void>{
         return null;
     }
 
+  
 
 }
